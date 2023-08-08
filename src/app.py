@@ -24,5 +24,15 @@ def delete_todo(position):
   print("This is the position to delete: ", position)
   return jsonify(todos)
 
+@app.route('/todos/<int:position>', methods=['PUT'])
+def upgrade_todos(position):
+  request_body = request.get_json(force=True)
+  
+  for i in range(0,len(todos)):
+    if i == position:
+      todos[i] = {"label":request_body['label'], "done":request_body['done']}
+ 
+  return jsonify(todos)
+
 if __name__ == '__main__':
   app.run(host='0.0.0.0', port=3245, debug=True)
